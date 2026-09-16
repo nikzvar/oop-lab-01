@@ -4,18 +4,39 @@ import strategy.Fly;
 import strategy.HorseRide;
 import strategy.Walk;
 
+import java.util.Scanner;
+
 public class Main {
     static void main() {
-        Hero hero = new Hero("Nikita", new Point(0, 0), new Walk());
-        hero.move(new Point(3, 4));
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter hero name: ");
+        String name = scanner.nextLine();
 
-        hero.setStrategy(new HorseRide());
-        hero.move(new Point(63, 84));
+        Hero hero = new Hero(name, new Point(0, 0), new Walk());
 
-        hero.setStrategy(new Fly());
-        hero.move(new Point(423, 564));
+        while (true) {
+            System.out.println("Choose a way to move: 1 - walk, 2 - horse ride, 3 - fly, 0 - exit");
+            int choice = scanner.nextInt();
 
-        hero.setStrategy(new Walk());
-        hero.move(new Point(420, 560));
+            if (choice == 0) {
+                break;
+            } else if (choice == 1) {
+                hero.setStrategy(new Walk());
+            } else if (choice == 2) {
+                hero.setStrategy(new HorseRide());
+            } else if (choice == 3) {
+                hero.setStrategy(new Fly());
+            } else {
+                System.out.println("Wrong choice");
+                continue;
+            }
+
+            System.out.print("Enter x: ");
+            double x = scanner.nextDouble();
+            System.out.print("Enter y: ");
+            double y = scanner.nextDouble();
+
+            hero.move(new Point(x, y));
+        }
     }
 }
